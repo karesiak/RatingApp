@@ -1,0 +1,34 @@
+﻿@model IEnumerable<RatingApp.Models.Rating>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Oceny</h2>
+<div>
+    <a asp-action="Create">Dodaj</a>
+</div>
+
+@foreach (var subjectGroup in Model.GroupBy(r => r.Subject))
+{
+    <h3>@subjectGroup.Key</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nr albumu</th>
+                <th>Ocena</th>
+                <th>Data wpisania oceny</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rating in subjectGroup)
+            {
+                <tr>
+                    <td>@rating.StudentId</td>
+                    <td class="@(rating.Value == 2 ? "text-danger" : rating.Value == 5 ? "text-success" : "text-primary")">@rating.Value</td>
+                    <td>@rating.DateAdded.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
